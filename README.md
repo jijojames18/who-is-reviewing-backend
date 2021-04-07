@@ -1,4 +1,4 @@
-# who-is-reviewing-backend
+# Who is reviewing
 Microservice to store details of users who are reviewing a pull request  
 
 ## Description  
