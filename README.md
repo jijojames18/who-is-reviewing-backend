@@ -123,6 +123,8 @@ Deletes all details of pull request.
 * Spring Boot
 * Redis
 
+### Frontend
+Repository : [who-is-reviewing-frontend](https://github.com/jijojames18/who-is-reviewing-frontend)
 
 ### License
 [MIT](https://github.com/jijojames18/who-is-reviewing-backend/blob/master/LICENSE)
