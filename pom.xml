@@ -49,13 +49,13 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>prod</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>docker</id>
         </profile>
         <profile>
             <id>heroku</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>dev</id>
