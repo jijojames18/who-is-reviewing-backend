@@ -47,6 +47,20 @@
             <artifactId>jedis</artifactId>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>heroku</id>
+        </profile>
+        <profile>
+            <id>dev</id>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
