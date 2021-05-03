@@ -9,6 +9,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -20,12 +21,13 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@Profile("heroku")
 @Configuration
 @EnableAutoConfiguration
 @ConfigurationProperties
-public class ApplicationConfig {
+public class ApplicationConfigHeroku {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationConfigHeroku.class);
 
     @Autowired
     private Environment env;
@@ -35,7 +37,7 @@ public class ApplicationConfig {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loaded() throws URISyntaxException {
-        logger.info("Application loaded");
+        logger.info("Application loaded in heroku mode");
     }
 
     private String getRedisUrl() {
