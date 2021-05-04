@@ -128,6 +128,7 @@ Repository : [who-is-reviewing-frontend](https://github.com/jijojames18/who-is-r
 
 ### Docker Images
 [Dev](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev)
+[Prod](https://hub.docker.com/r/jijojames18/who-is-reviewing)
 
 ### License
 [MIT](https://github.com/jijojames18/who-is-reviewing-backend/blob/master/LICENSE)
