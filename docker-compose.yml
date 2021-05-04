@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  who-is-reviewing:
+    image: jijojames18/who-is-reviewing-dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/usr/src/who-is-reviewing
+    links:
+      - redis
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
