@@ -127,7 +127,7 @@ Deletes all details of pull request.
 Repository : [who-is-reviewing-frontend](https://github.com/jijojames18/who-is-reviewing-frontend)
 
 ### Docker Images
-[Dev](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev)
+[Dev](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev)  
 [Prod](https://hub.docker.com/r/jijojames18/who-is-reviewing)
 
 ### License
