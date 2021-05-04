@@ -3,4 +3,4 @@ WORKDIR /usr/src/who-is-reviewing
 COPY pom.xml .
 COPY src/ src/
 RUN ["mvn", "package"]
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker.local", "target/who-is-reviewing-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["mvn", "spring-boot:run", "-Dspring-boot.run.profiles=docker.local"]
