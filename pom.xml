@@ -49,7 +49,10 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>docker</id>
+            <id>docker.prod</id>
+        </profile>
+        <profile>
+            <id>docker.local</id>
         </profile>
         <profile>
             <id>heroku</id>
