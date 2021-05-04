@@ -9,4 +9,4 @@ RUN ["mvn", "clean", "package"]
 FROM openjdk:8-jre-alpine
 COPY --from=build /usr/src/who-is-reviewing/target/who-is-reviewing-1.0-SNAPSHOT.jar /usr/src/who-is-reviewing/who-is-reviewing.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/src/who-is-reviewing/who-is-reviewing.jar", "-Dspring.profiles.active=docker.prod"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker.prod", "/usr/src/who-is-reviewing/who-is-reviewing.jar"]
