@@ -12,6 +12,8 @@ public class RedisConfiguration {
 
     private String password;
 
+    private String masterHostName;
+
     public RedisConfiguration() {
         this.hostName = "localhost";
         this.port = 6379;
@@ -54,8 +56,13 @@ public class RedisConfiguration {
         return isSentinel;
     }
 
-    public void setIsSentinel(boolean isSentinel) {
-        this.isSentinel = isSentinel;
+    public String getMasterHostName() {
+        return this.masterHostName;
+    }
+
+    public void setMasterHostName(String masterHostName) {
+        this.masterHostName = masterHostName;
+        this.isSentinel = true;
     }
 
     public RedisStandaloneConfiguration getHostConfig() {
@@ -68,6 +75,7 @@ public class RedisConfiguration {
 
     public RedisSentinelConfiguration getSentinelConfig() {
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration();
+        sentinelConfig.setMaster(masterHostName);
         sentinelConfig.sentinel(hostName, port);
         sentinelConfig.setPassword(password);
         return sentinelConfig;
