@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,7 +25,7 @@ public class ApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
     @Autowired
-    RedisStandaloneConfiguration hostConfig;
+    RedisConfiguration redisConfig;
     @Autowired
     private Environment env;
 
@@ -39,11 +38,15 @@ public class ApplicationConfig {
     public JedisConnectionFactory getJedisConnectionFactory() {
         JedisClientConfiguration.JedisClientConfigurationBuilder builder = JedisClientConfiguration.builder();
         JedisClientConfiguration clientConfig = builder.usePooling().build();
-        return new JedisConnectionFactory(hostConfig, clientConfig);
+        if (redisConfig.isSentinelMode()) {
+            return new JedisConnectionFactory(redisConfig.getSentinelConfig(), clientConfig);
+        } else {
+            return new JedisConnectionFactory(redisConfig.getHostConfig(), clientConfig);
+        }
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() throws URISyntaxException {
+    public RedisTemplate<String, Object> redisTemplate() {
         final RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(getJedisConnectionFactory());
         template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));

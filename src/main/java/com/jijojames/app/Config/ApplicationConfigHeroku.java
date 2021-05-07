@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,19 +22,17 @@ public class ApplicationConfigHeroku {
     private Environment env;
 
     @Value("${spring.application.redis-url}")
-    private String redisUrl;
+    private String redisUrlEnv;
 
     private String getRedisUrl() {
-        return env.getProperty(redisUrl);
+        return env.getProperty(redisUrlEnv);
     }
 
     @Bean
-    public RedisStandaloneConfiguration hostConfig() throws URISyntaxException {
+    public RedisConfiguration redisConfig() throws URISyntaxException {
         URI redisUri = new URI(getRedisUrl());
-        RedisStandaloneConfiguration hostConfig = new RedisStandaloneConfiguration();
-        hostConfig.setPort(redisUri.getPort());
-        hostConfig.setHostName(redisUri.getHost());
-        hostConfig.setPassword(redisUri.getUserInfo().split(":", 2)[1]);
-        return hostConfig;
+        RedisConfiguration redisConfig = new RedisConfiguration(redisUri.getHost(), redisUri.getPort());
+        redisConfig.setPassword(redisUri.getUserInfo().split(":", 2)[1]);
+        return redisConfig;
     }
 }
