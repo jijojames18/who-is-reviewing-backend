@@ -25,7 +25,6 @@ public class ApplicationConfigDev {
     @Bean
     public RedisConfiguration redisConfig() {
         RedisConfiguration redisConfig = new RedisConfiguration(redisHost, redisPort);
-        redisConfig.setIsSentinel(false);
         redisConfig.setPassword(redisPassword);
         return redisConfig;
     }
