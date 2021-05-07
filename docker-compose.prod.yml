@@ -1,0 +1,52 @@
+version: "3.5"
+services:
+  redis-master:
+    image: "bitnami/redis"
+    container_name: redis-master
+    secrets:
+      - REDIS_PASSWORD
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
+    volumes:
+      - ~/redis-persistence/redis-master:/bitnami/redis/data
+    ports:
+      - "6379"
+  redis-replica:
+    image: "bitnami/redis"
+    secrets:
+      - REDIS_PASSWORD
+    environment:
+      - REDIS_REPLICATION_MODE=replica
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
+      - REDIS_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
+    volumes:
+      -  ~/redis-persistence/redis-replica:/bitnami/redis/data  
+    ports:
+      - "6379"
+    depends_on:
+      - redis-master
+  redis-sentinel:
+    image: "bitnami/redis-sentinel"
+    secrets:
+      - REDIS_PASSWORD
+    environment:
+      - REDIS_MASTER_SET=mymaster
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=10000
+    depends_on:
+      - redis-master
+      - redis-replica
+    ports:
+      - "26379"
+  who-is-reviewing:
+    image: jijojames18/who-is-reviewing
+    ports:
+      - "80:8080"
+    links:
+      - redis-sentinel
+secrets:
+  REDIS_PASSWORD:
+    external: true  
