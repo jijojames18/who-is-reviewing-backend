@@ -2,7 +2,6 @@ version: "3.5"
 services:
   redis-master:
     image: "bitnami/redis"
-    container_name: redis-master
     secrets:
       - REDIS_PASSWORD
     environment:
