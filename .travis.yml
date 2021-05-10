@@ -10,4 +10,8 @@ branches:
 script:
   - mvn clean
   - mvn package
-  - docker build -t jijojames18/who-is-reviewing .
+
+after_success:
+  - docker build -t jijojames18/who-is-reviewing:latest .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push "$DOCKER_USERNAME"/who-is-reviewing:latest
