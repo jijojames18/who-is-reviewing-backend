@@ -1,5 +1,8 @@
 language: java
 
+services:
+  - docker
+
 branches:
   only:
     - main
@@ -7,3 +10,4 @@ branches:
 script:
   - mvn clean
   - mvn package
+  - docker build -t jijojames18/who-is-reviewing .
