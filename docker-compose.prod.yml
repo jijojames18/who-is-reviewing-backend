@@ -42,9 +42,12 @@ services:
       - "26379"
   who-is-reviewing:
     image: jijojames18/who-is-reviewing
+    environment:
+      - redis-sentinel-port=26379
     ports:
       - "80:8080"
-    links:
+    depends_on:
+      - redis-master
       - redis-sentinel
 secrets:
   REDIS_PASSWORD:
