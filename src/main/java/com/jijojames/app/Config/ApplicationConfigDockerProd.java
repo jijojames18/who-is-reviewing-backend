@@ -24,8 +24,8 @@ public class ApplicationConfigDockerProd {
     @Autowired
     private Environment env;
 
-    @Value("${spring.application.redis-master-host}")
-    private String redisMasterHost;
+    @Value("${spring.application.redis-master-set}")
+    private String redisMasterSet;
 
     @Value("${spring.application.redis-sentinel-host}")
     private String redisHost;
@@ -56,7 +56,7 @@ public class ApplicationConfigDockerProd {
     @Bean
     public RedisConfiguration redisConfig() {
         RedisConfiguration redisConfig = new RedisConfiguration(redisHost, getRedisPort());
-        redisConfig.setMasterHostName(redisMasterHost);
+        redisConfig.setMasterHostName(redisMasterSet);
         redisConfig.setPassword(getRedisPassword());
         return redisConfig;
     }
