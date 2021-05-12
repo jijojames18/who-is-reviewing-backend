@@ -14,7 +14,7 @@ import java.util.Map;
 public class RestErrorHandler {
     @ExceptionHandler(InvalidFormatException.class)
     @ResponseBody
-    public ResponseEntity<Object> processException(Exception e) {
+    public ResponseEntity<Object> processInvalidFormatException(Exception e) {
         Map error = new HashMap();
         error.put("error-message", "Invalid format exception");
         error.put("error-code", 400);

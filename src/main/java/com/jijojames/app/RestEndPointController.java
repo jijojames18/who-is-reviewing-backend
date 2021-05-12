@@ -35,7 +35,7 @@ public class RestEndPointController {
     public ResponseEntity<Object> setById(@PathVariable String project, @PathVariable String id, @RequestBody UserStatus userStatus) {
         logger.debug("[START] Received new request to set data for project {} and pull request {}", project, id);
         if (userStatus.getStatus() == PRStatus.STARTED) {
-            redisRepository.set(project, id, userStatus);
+            redisRepository.addUser(project, id, userStatus);
         } else {
             redisRepository.deleteUser(project, id, userStatus);
         }

@@ -29,10 +29,10 @@ public class ApplicationConfigHeroku {
     }
 
     @Bean
-    public RedisConfiguration redisConfig() throws URISyntaxException {
+    public RedisConfiguration redisConfiguration() throws URISyntaxException {
         URI redisUri = new URI(getRedisUrl());
-        RedisConfiguration redisConfig = new RedisConfiguration(redisUri.getHost(), redisUri.getPort());
-        redisConfig.setPassword(redisUri.getUserInfo().split(":", 2)[1]);
-        return redisConfig;
+        RedisConfiguration redisConfiguration = new RedisConfiguration(redisUri.getHost(), redisUri.getPort());
+        redisConfiguration.setPassword(redisUri.getUserInfo().split(":", 2)[1]);
+        return redisConfiguration;
     }
 }

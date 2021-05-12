@@ -22,12 +22,12 @@ public class ApplicationConfigDockerProd {
     private String redisMasterSet;
 
     @Value("${spring.application.redis-sentinel-host}")
-    private String redisHost;
+    private String redisSentinelHost;
 
     @Value("${spring.application.redis-sentinel-port}")
-    private int redisPort;
+    private int redisSentinelPort;
 
-    @Value("${spring.application.redis-password}")
+    @Value("${spring.application.redis-password-file}")
     private String redisPasswordFile;
 
     public String getRedisPassword() {
@@ -44,10 +44,10 @@ public class ApplicationConfigDockerProd {
     }
 
     @Bean
-    public RedisConfiguration redisConfig() {
-        RedisConfiguration redisConfig = new RedisConfiguration(redisHost, redisPort);
-        redisConfig.setMasterSetName(redisMasterSet);
-        redisConfig.setPassword(getRedisPassword());
-        return redisConfig;
+    public RedisConfiguration redisConfiguration() {
+        RedisConfiguration redisConfiguration = new RedisConfiguration(redisSentinelHost, redisSentinelPort);
+        redisConfiguration.setMasterSetName(redisMasterSet);
+        redisConfiguration.setPassword(getRedisPassword());
+        return redisConfiguration;
     }
 }

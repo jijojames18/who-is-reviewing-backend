@@ -23,9 +23,9 @@ public class ApplicationConfigDev {
     private String redisPassword;
 
     @Bean
-    public RedisConfiguration redisConfig() {
-        RedisConfiguration redisConfig = new RedisConfiguration(redisHost, redisPort);
-        redisConfig.setPassword(redisPassword);
-        return redisConfig;
+    public RedisConfiguration redisConfiguration() {
+        RedisConfiguration redisConfiguration = new RedisConfiguration(redisHost, redisPort);
+        redisConfiguration.setPassword(redisPassword);
+        return redisConfiguration;
     }
 }

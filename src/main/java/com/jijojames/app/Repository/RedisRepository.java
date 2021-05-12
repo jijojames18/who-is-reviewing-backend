@@ -12,7 +12,7 @@ import java.util.Set;
 @Repository
 public class RedisRepository {
 
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     private SetOperations setOperations;
 
@@ -30,16 +30,16 @@ public class RedisRepository {
         return project + "/" + id;
     }
 
-    public Long set(String project, String id, UserStatus status) {
-        return setOperations.add(getKey(project, id), status.getUserId());
+    public Long addUser(String project, String id, UserStatus userStatus) {
+        return setOperations.add(getKey(project, id), userStatus.getUserId());
     }
 
     public Set get(String project, String id) {
         return setOperations.members(getKey(project, id));
     }
 
-    public Long deleteUser(String project, String id, UserStatus status) {
-        return setOperations.remove(getKey(project, id), status.getUserId());
+    public Long deleteUser(String project, String id, UserStatus userStatus) {
+        return setOperations.remove(getKey(project, id), userStatus.getUserId());
     }
 
     public Boolean deleteKey(String project, String id) {
