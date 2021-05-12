@@ -1,7 +1,7 @@
 version: "3.5"
 services:
-  redis-master:
-    image: "bitnami/redis"
+  redis:
+    image: 'bitnami/redis:6.0.13'
     secrets:
       - REDIS_PASSWORD
     environment:
@@ -10,44 +10,43 @@ services:
     volumes:
       - ~/redis-persistence/redis-master:/bitnami/redis/data
     ports:
-      - "6379"
-  redis-replica:
-    image: "bitnami/redis"
-    secrets:
-      - REDIS_PASSWORD
+      - '6379'
+  redis-slave:
+    image: 'bitnami/redis:6.0.13'
     environment:
-      - REDIS_REPLICATION_MODE=replica
-      - REDIS_MASTER_HOST=redis-master
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis
       - REDIS_MASTER_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
       - REDIS_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
     volumes:
-      -  ~/redis-persistence/redis-replica:/bitnami/redis/data  
+      - ~/redis-persistence/redis-slave:/bitnami/redis/data  
+    secrets:
+      - REDIS_PASSWORD
     ports:
-      - "6379"
+      - '6379'
     depends_on:
-      - redis-master
+      - redis
   redis-sentinel:
-    image: "bitnami/redis-sentinel"
+    image: 'bitnami/redis-sentinel:6.0.13'
     secrets:
       - REDIS_PASSWORD
     environment:
-      - REDIS_MASTER_SET=mymaster
-      - REDIS_MASTER_HOST=redis-master
       - REDIS_MASTER_PASSWORD_FILE=/run/secrets/REDIS_PASSWORD
-      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=10000
     depends_on:
-      - redis-master
-      - redis-replica
+      - redis
+      - redis-slave
     ports:
-      - "26379"
+      - '26379-26381:26379'
   who-is-reviewing:
     image: jijojames18/who-is-reviewing
+    secrets:
+      - REDIS_PASSWORD
     environment:
       - redis-sentinel-port=26379
     ports:
       - "80:8080"
     depends_on:
-      - redis-master
+      - redis
       - redis-sentinel
 secrets:
   REDIS_PASSWORD:
