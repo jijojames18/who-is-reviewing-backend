@@ -12,7 +12,7 @@ public class RedisConfiguration {
 
     private String password;
 
-    private String masterHostName;
+    private String masterSetName;
 
     public RedisConfiguration() {
         this.hostName = "localhost";
@@ -56,12 +56,12 @@ public class RedisConfiguration {
         return isSentinel;
     }
 
-    public String getMasterHostName() {
-        return this.masterHostName;
+    public String getMasterSetName() {
+        return this.masterSetName;
     }
 
-    public void setMasterHostName(String masterHostName) {
-        this.masterHostName = masterHostName;
+    public void setMasterSetName(String masterSetName) {
+        this.masterSetName = masterSetName;
         this.isSentinel = true;
     }
 
@@ -75,7 +75,7 @@ public class RedisConfiguration {
 
     public RedisSentinelConfiguration getSentinelConfig() {
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration();
-        sentinelConfig.setMaster(masterHostName);
+        sentinelConfig.setMaster(masterSetName);
         sentinelConfig.sentinel(hostName, port);
         sentinelConfig.setPassword(password);
         return sentinelConfig;

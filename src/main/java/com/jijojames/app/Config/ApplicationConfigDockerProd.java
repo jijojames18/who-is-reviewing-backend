@@ -56,7 +56,7 @@ public class ApplicationConfigDockerProd {
     @Bean
     public RedisConfiguration redisConfig() {
         RedisConfiguration redisConfig = new RedisConfiguration(redisHost, getRedisPort());
-        redisConfig.setMasterHostName(redisMasterSet);
+        redisConfig.setMasterSetName(redisMasterSet);
         redisConfig.setPassword(getRedisPassword());
         return redisConfig;
     }
