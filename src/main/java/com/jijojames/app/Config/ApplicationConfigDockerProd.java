@@ -1,13 +1,11 @@
 package com.jijojames.app.Config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StreamUtils;
@@ -20,10 +18,6 @@ import java.nio.charset.Charset;
 @EnableAutoConfiguration
 @ConfigurationProperties
 public class ApplicationConfigDockerProd {
-
-    @Autowired
-    private Environment env;
-
     @Value("${spring.application.redis-master-set}")
     private String redisMasterSet;
 
@@ -31,14 +25,10 @@ public class ApplicationConfigDockerProd {
     private String redisHost;
 
     @Value("${spring.application.redis-sentinel-port}")
-    private String redisPortEnv;
+    private int redisPort;
 
     @Value("${spring.application.redis-password}")
     private String redisPasswordFile;
-
-    public int getRedisPort() {
-        return Integer.parseInt(env.getProperty(redisPortEnv));
-    }
 
     public String getRedisPassword() {
         Resource resource = new FileSystemResource("/run/secrets/" + redisPasswordFile);
@@ -55,7 +45,7 @@ public class ApplicationConfigDockerProd {
 
     @Bean
     public RedisConfiguration redisConfig() {
-        RedisConfiguration redisConfig = new RedisConfiguration(redisHost, getRedisPort());
+        RedisConfiguration redisConfig = new RedisConfiguration(redisHost, redisPort);
         redisConfig.setMasterSetName(redisMasterSet);
         redisConfig.setPassword(getRedisPassword());
         return redisConfig;

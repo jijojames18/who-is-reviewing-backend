@@ -21,7 +21,7 @@ public class ApplicationConfigHeroku {
     @Autowired
     private Environment env;
 
-    @Value("${spring.application.redis-url}")
+    @Value("${spring.application.redis-url-env}")
     private String redisUrlEnv;
 
     private String getRedisUrl() {
