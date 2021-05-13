@@ -8,12 +8,25 @@ This microservice holds the list of users who are currently reviewing a pull req
 The service uses Redis for data persistence. Usernames of users who are currently reviewing a given pull request are stored as a set in a redis key with format
 `<project_name>/<pull_request_id>`.
 
+## Environments  
+The application can be run in 4 environments, namely `dev`, `heroku`, `docker.local`, and `docker.prod`.  
+1. `dev`- Local development environment.
+2. `heroku` - App deployed in heroku. A redis addon should be present as part of the dyno.  
+3. `docker.local` - Docker environment for development. Docker file [`who-is-reviewing-dev`](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev) can be used for development. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.yml) file is also present in the repository.
+4. `docker.prod` - Docker for production. Docker file [`who-is-reviewing`](https://hub.docker.com/r/jijojames18/who-is-reviewing), available at Docker Hub can be used for production deployment. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.prod.yml) file is also present in the repository.  
+
+The properties file for each environment is located inside the `resources` folder.  
+*For every successful push to `main` branch, the dev and prod docker images will be updated with the new changes.*   
+
 ## Environment Variables
-The service requires the redis login credentials to be present as an environment variable.
+While deploying to heroku, The service requires the redis login credentials to be present as an environment variable.
 
 Variable | Description |
 ------|-------------|
 REDIS_URL | Redis url of format `redis://<username>:<password>@<host>:<port>` |
+
+## Docker Secrets
+While deploying docker prod images, make sure the redis password is mounted as a secret inside the container. The filename for the password can be configured inside the properties file for `docker.prod`.  
 
 ## API
 ### Get list of users
