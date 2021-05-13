@@ -1,5 +1,9 @@
 version: "3.5"
 services:
+  redis:
+    image: 'bitnami/redis:6.0.13'
+    ports:
+      - "6379:6379"
   who-is-reviewing:
     image: jijojames18/who-is-reviewing-dev
     ports:
@@ -8,7 +12,3 @@ services:
       - ./:/usr/src/who-is-reviewing
     links:
       - redis
-  redis:
-    image: 'bitnami/redis:6.0.13'
-    ports:
-      - "6379:6379"
