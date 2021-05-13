@@ -29,6 +29,7 @@ public class ApplicationConfig {
         logger.info("Application loaded. Active profiles {}", Arrays.toString(env.getActiveProfiles()));
     }
 
+    @Bean
     public JedisConnectionFactory getJedisConnectionFactory() {
         JedisClientConfiguration.JedisClientConfigurationBuilder builder = JedisClientConfiguration.builder();
         JedisClientConfiguration clientConfig = builder.usePooling().build();
