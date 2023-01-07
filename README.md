@@ -9,17 +9,15 @@ The service uses Redis for data persistence. Usernames of users who are currentl
 `<project_name>/<pull_request_id>`.
 
 ## Environments  
-The application can be run in 4 environments, namely `dev`, `heroku`, `docker.local`, and `docker.prod`.  
-1. `dev`- Local development environment.
-2. `heroku` - App deployed in heroku. A redis addon should be present as part of the dyno.  
-3. `docker.local` - Docker environment for development. Docker file [`who-is-reviewing-dev`](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev) can be used for development. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.yml) file is also present in the repository.
-4. `docker.prod` - Docker for production. Docker file [`who-is-reviewing`](https://hub.docker.com/r/jijojames18/who-is-reviewing), available at Docker Hub can be used for production deployment. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.prod.yml) file is also present in the repository.  
+The application can be run in 4 environments, namely `dev`, `docker.local`, and `docker.prod`.  
+1. `dev`- Local development environment.  
+2. `docker.local` - Docker environment for development. Docker file [`who-is-reviewing-dev`](https://hub.docker.com/r/jijojames18/who-is-reviewing-dev) can be used for development. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.yml) file is also present in the repository.
+3. `docker.prod` - Docker for production. Docker file [`who-is-reviewing`](https://hub.docker.com/r/jijojames18/who-is-reviewing), available at Docker Hub can be used for production deployment. A sample [docker compose](https://github.com/jijojames18/who-is-reviewing-backend/blob/main/docker-compose.prod.yml) file is also present in the repository.  
 
 The properties file for each environment is located inside the `resources` folder.  
 *For every successful push to `main` branch, the dev and prod docker images will be updated with the new changes.*   
 
-## Environment Variables
-While deploying to heroku, The service requires the redis login credentials to be present as an environment variable.
+## Environment Variables  
 
 Variable | Description |
 ------|-------------|
